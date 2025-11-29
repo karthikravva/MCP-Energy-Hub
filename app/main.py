@@ -125,13 +125,16 @@ async def root():
 # Mount Gradio app
 try:
     import gradio as gr
+    logger.info(f"Gradio version: {gr.__version__}")
     from gradio_app import demo as gradio_demo
     app.gradio_app = gr.mount_gradio_app(app, gradio_demo, path="/ui")
     logger.info("Gradio UI mounted at /ui")
-except ImportError:
-    logger.warning("Gradio not installed, UI not available")
+except ImportError as e:
+    logger.warning(f"Gradio not installed, UI not available: {e}")
 except Exception as e:
     logger.warning(f"Could not mount Gradio: {e}")
+    import traceback
+    logger.warning(traceback.format_exc())
 
 
 if __name__ == "__main__":
