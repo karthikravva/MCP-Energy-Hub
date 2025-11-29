@@ -366,7 +366,12 @@ class EIACollector(BaseCollector):
         Ensure all BA regions exist in the database
         SQLite-compatible version
         """
+        # Only process main ISO entries (those with full info)
         for ba_code, info in BA_REGION_MAP.items():
+            # Skip utility mappings that only have region_id
+            if "name" not in info:
+                continue
+
             # Check if region exists
             existing = await self.session.execute(
                 select(GridRegionDB).where(
