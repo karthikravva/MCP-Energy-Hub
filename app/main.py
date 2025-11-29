@@ -104,22 +104,9 @@ app.include_router(mcp_router)
 @app.get("/")
 async def root():
     """
-    Root endpoint - Redirect to Gradio UI or show API info
+    Root endpoint - Redirect to Gradio UI
     """
-    # Check if Gradio is mounted
-    if hasattr(app, 'gradio_app'):
-        return RedirectResponse(url="/ui")
-
-    return {
-        "name": "MCP Energy Hub",
-        "version": __version__,
-        "description": "Monitoring • Control • Prediction for AI + Energy",
-        "hackathon": "MCP's 1st Birthday - Track 1: Building MCP (Enterprise)",
-        "ui": "/ui",
-        "docs": "/docs",
-        "mcp_tools": "/mcp/tools",
-        "health": "/health",
-    }
+    return RedirectResponse(url="/ui/")
 
 
 # Mount Gradio app
