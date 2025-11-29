@@ -326,13 +326,25 @@ class MCPServer:
 
         region_scores = []
         for region in regions:
+            # First try to get record with generation data
             metrics_result = await session.execute(
                 select(GridMetricsDB)
                 .where(GridMetricsDB.region_id == region.region_id)
+                .where(GridMetricsDB.total_generation_mw > 0)
                 .order_by(desc(GridMetricsDB.timestamp_utc))
                 .limit(1)
             )
             metrics = metrics_result.scalar_one_or_none()
+
+            # Fall back to most recent if no generation data
+            if not metrics:
+                metrics_result = await session.execute(
+                    select(GridMetricsDB)
+                    .where(GridMetricsDB.region_id == region.region_id)
+                    .order_by(desc(GridMetricsDB.timestamp_utc))
+                    .limit(1)
+                )
+                metrics = metrics_result.scalar_one_or_none()
 
             if metrics:
                 if optimize_for == "carbon":
