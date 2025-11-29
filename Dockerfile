@@ -24,14 +24,15 @@ RUN pip install --no-cache-dir \
     python-dotenv==1.0.0 \
     gradio>=4.0.0
 
+# Create non-root user first
+RUN useradd -m -u 1000 appuser
+
 # Copy application code
-COPY . .
+COPY --chown=appuser:appuser . .
 
-# Create data directory for SQLite
-RUN mkdir -p /app/data
+# Create data directory for SQLite with correct permissions
+RUN mkdir -p /app/data && chown -R appuser:appuser /app
 
-# Create non-root user
-RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
 USER appuser
 
 # Set environment
