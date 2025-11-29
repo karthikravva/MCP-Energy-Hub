@@ -22,7 +22,7 @@ RUN pip install --no-cache-dir \
     aiohttp==3.9.1 \
     apscheduler==3.10.4 \
     python-dotenv==1.0.0 \
-    gradio>=4.0.0
+    gradio==4.44.0
 
 # Create non-root user first
 RUN useradd -m -u 1000 appuser
