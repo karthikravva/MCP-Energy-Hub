@@ -74,16 +74,28 @@ class MCPServer:
             return {"error": str(e)}
 
     async def _get_grid_realtime(self, session: AsyncSession, args: Dict) -> Dict:
-        """Get real-time grid metrics"""
+        """Get real-time grid metrics - prioritize records with generation data"""
         region_id = args.get("region_id")
 
+        # First try to get the most recent record with generation data
         result = await session.execute(
             select(GridMetricsDB)
             .where(GridMetricsDB.region_id == region_id)
+            .where(GridMetricsDB.total_generation_mw > 0)
             .order_by(desc(GridMetricsDB.timestamp_utc))
             .limit(1)
         )
         metrics = result.scalar_one_or_none()
+
+        # Fall back to most recent record if no generation data exists
+        if not metrics:
+            result = await session.execute(
+                select(GridMetricsDB)
+                .where(GridMetricsDB.region_id == region_id)
+                .order_by(desc(GridMetricsDB.timestamp_utc))
+                .limit(1)
+            )
+            metrics = result.scalar_one_or_none()
 
         if not metrics:
             return {"error": f"No data for region {region_id}"}
@@ -100,16 +112,28 @@ class MCPServer:
         }
 
     async def _get_grid_carbon(self, session: AsyncSession, args: Dict) -> Dict:
-        """Get current carbon intensity"""
+        """Get current carbon intensity - prioritize records with generation data"""
         region_id = args.get("region_id")
 
+        # First try to get the most recent record with generation data
         result = await session.execute(
             select(GridMetricsDB)
             .where(GridMetricsDB.region_id == region_id)
+            .where(GridMetricsDB.total_generation_mw > 0)
             .order_by(desc(GridMetricsDB.timestamp_utc))
             .limit(1)
         )
         metrics = result.scalar_one_or_none()
+
+        # Fall back to most recent record if no generation data exists
+        if not metrics:
+            result = await session.execute(
+                select(GridMetricsDB)
+                .where(GridMetricsDB.region_id == region_id)
+                .order_by(desc(GridMetricsDB.timestamp_utc))
+                .limit(1)
+            )
+            metrics = result.scalar_one_or_none()
 
         if not metrics:
             return {"error": f"No data for region {region_id}"}
