@@ -278,14 +278,25 @@ class MCPServer:
         """Get AI impact KPIs for a region"""
         region_id = args.get("region_id")
 
-        # Get grid metrics
+        # Get grid metrics - prioritize records with generation data
         grid_result = await session.execute(
             select(GridMetricsDB)
             .where(GridMetricsDB.region_id == region_id)
+            .where(GridMetricsDB.total_generation_mw > 0)
             .order_by(desc(GridMetricsDB.timestamp_utc))
             .limit(1)
         )
         grid = grid_result.scalar_one_or_none()
+
+        # Fall back to most recent if no generation data
+        if not grid:
+            grid_result = await session.execute(
+                select(GridMetricsDB)
+                .where(GridMetricsDB.region_id == region_id)
+                .order_by(desc(GridMetricsDB.timestamp_utc))
+                .limit(1)
+            )
+            grid = grid_result.scalar_one_or_none()
 
         if not grid:
             return {"error": f"No grid data for region {region_id}"}
