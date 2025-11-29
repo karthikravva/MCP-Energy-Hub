@@ -30,7 +30,7 @@ app_port: 7860
 
 **🏆 MCP's 1st Birthday Hackathon Submission - Track 1: Building MCP (Enterprise)**
 
-[🎬 Demo Video](#-demo-video) • [🚀 Try It Live](#-quick-start) • [📖 Documentation](#-mcp-tools) • [🐦 Share on X](https://twitter.com/intent/tweet?text=Check%20out%20MCP%20Energy%20Hub%20-%20Real-time%20energy%20grid%20intelligence%20for%20carbon-aware%20AI!%20%E2%9A%A1&url=https://huggingface.co/spaces/YOUR-USERNAME/mcp-energy-hub)
+[🎬 Demo Video](#-demo-video) • [🚀 Try It Live](https://huggingface.co/spaces/MCP-1st-Birthday/mcp-energy-hub) • [📖 Documentation](#-mcp-tools) • [🐦 Share on X](https://twitter.com/intent/tweet?text=Check%20out%20MCP%20Energy%20Hub%20-%20Real-time%20energy%20grid%20intelligence%20for%20carbon-aware%20AI!%20%E2%9A%A1&url=https://huggingface.co/spaces/MCP-1st-Birthday/mcp-energy-hub)
 
 </div>
 
@@ -143,7 +143,7 @@ result = mcp.call_tool("get_best_region_for_compute", {
 
 ```bash
 # Get carbon intensity for Texas grid
-curl -X POST https://YOUR-SPACE.hf.space/mcp/tools/call \
+curl -X POST https://mcp-1st-birthday-mcp-energy-hub.hf.space/mcp/tools/call \
   -H "Content-Type: application/json" \
   -d '{"name": "get_grid_carbon", "arguments": {"region_id": "ERCOT"}}'
 ```
@@ -292,9 +292,9 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 🔗 Links
 
-- **🐦 Twitter/X Post**: [Share your thoughts!](https://twitter.com/intent/tweet?text=Check%20out%20MCP%20Energy%20Hub%20-%20Real-time%20energy%20grid%20intelligence%20for%20carbon-aware%20AI!%20%E2%9A%A1&url=https://huggingface.co/spaces/YOUR-USERNAME/mcp-energy-hub)
-- **💬 HF Discussions**: [Ask questions here](https://huggingface.co/spaces/YOUR-USERNAME/mcp-energy-hub/discussions)
-- **📧 Contact**: [Your contact info]
+- **🐦 Twitter/X Post**: [Share your thoughts!](https://twitter.com/intent/tweet?text=Check%20out%20MCP%20Energy%20Hub%20-%20Real-time%20energy%20grid%20intelligence%20for%20carbon-aware%20AI!%20%E2%9A%A1&url=https://huggingface.co/spaces/MCP-1st-Birthday/mcp-energy-hub)
+- **💬 HF Discussions**: [Ask questions here](https://huggingface.co/spaces/MCP-1st-Birthday/mcp-energy-hub/discussions)
+- **🌐 Live Demo**: [Try it now!](https://huggingface.co/spaces/MCP-1st-Birthday/mcp-energy-hub)
 
 ---
 

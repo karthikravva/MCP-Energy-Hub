@@ -223,21 +223,6 @@ class EIACollector(BaseCollector):
         # Group by region and timestamp
         grouped = {}
 
-        # Debug: log sample records and unique BA codes
-        gen_records = [r for r in raw_data if r.get(
-            "record_type") == "generation"]
-        if gen_records:
-            unique_bas = set(r.get("respondent") for r in gen_records)
-            logger.info(
-                f"Unique BA codes in generation data: {sorted(unique_bas)}")
-            matched_bas = [ba for ba in unique_bas if ba in BA_REGION_MAP]
-            logger.info(f"Matched BA codes: {matched_bas}")
-            # Log sample ERCO generation record
-            erco_gen = [r for r in gen_records if r.get(
-                "respondent") == "ERCO"]
-            if erco_gen:
-                logger.info(f"Sample ERCO generation: {erco_gen[0]}")
-
         for record in raw_data:
             # Try both 'respondent' and 'respondent-name' fields
             ba_code = record.get("respondent") or record.get(
@@ -298,25 +283,6 @@ class EIACollector(BaseCollector):
                 grouped[key]["total_generation_mw"] += value
             elif record_type == "interchange":
                 grouped[key]["net_interchange_mw"] = value
-
-        # Debug: log ERCOT totals - find one with both load and gen
-        ercot_keys = [k for k in grouped.keys() if k[0] == "ERCOT"]
-        if ercot_keys:
-            # Find keys with generation data
-            ercot_with_gen = [
-                k for k in ercot_keys if grouped[k]['total_generation_mw'] > 0]
-            ercot_with_load = [
-                k for k in ercot_keys if grouped[k]['load_mw'] > 0]
-            logger.info(
-                f"ERCOT keys with gen: {len(ercot_with_gen)}, with load: {len(ercot_with_load)}, total: {len(ercot_keys)}")
-            if ercot_with_gen:
-                sample_key = ercot_with_gen[0]
-                logger.info(
-                    f"ERCOT with gen - ts={sample_key[1]}, load={grouped[sample_key]['load_mw']}, gen={grouped[sample_key]['total_generation_mw']}")
-            if ercot_with_load:
-                sample_key = ercot_with_load[0]
-                logger.info(
-                    f"ERCOT with load - ts={sample_key[1]}, load={grouped[sample_key]['load_mw']}, gen={grouped[sample_key]['total_generation_mw']}")
 
         # Calculate derived metrics
         result = []
