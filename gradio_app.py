@@ -422,25 +422,6 @@ Real-time energy grid intelligence for carbon-aware AI compute.
                 outputs=[dc_output]
             )
 
-            gr.Markdown("---")
-            gr.Markdown("#### Get Energy Estimates for a Data Center")
-
-            with gr.Row():
-                dc_id_input = gr.Textbox(
-                    label="Data Center ID",
-                    placeholder="e.g., aws-us-east-1"
-                )
-                dc_energy_btn = gr.Button(
-                    "Get Energy Estimates", variant="secondary")
-
-            dc_energy_output = gr.Markdown()
-
-            dc_energy_btn.click(
-                fn=get_dc_energy,
-                inputs=[dc_id_input],
-                outputs=[dc_energy_output]
-            )
-
         # Tab 6: All Regions
         with gr.TabItem("All Regions"):
             gr.Markdown("Overview of all available US grid regions.")

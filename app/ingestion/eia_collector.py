@@ -223,13 +223,15 @@ class EIACollector(BaseCollector):
         # Group by region and timestamp
         grouped = {}
 
-        # Debug: log sample records
+        # Debug: log sample records and unique BA codes
         gen_records = [r for r in raw_data if r.get(
             "record_type") == "generation"]
         if gen_records:
+            unique_bas = set(r.get("respondent") for r in gen_records)
             logger.info(
-                f"Sample generation record keys: {list(gen_records[0].keys())}")
-            logger.info(f"Sample generation record: {gen_records[0]}")
+                f"Unique BA codes in generation data: {sorted(unique_bas)}")
+            matched_bas = [ba for ba in unique_bas if ba in BA_REGION_MAP]
+            logger.info(f"Matched BA codes: {matched_bas}")
 
         for record in raw_data:
             # Try both 'respondent' and 'respondent-name' fields
