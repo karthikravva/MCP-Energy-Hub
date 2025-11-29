@@ -47,5 +47,5 @@ EXPOSE 7860
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:7860/health || exit 1
 
-# Start script: initialize DB, load data, then start server
-CMD ["sh", "-c", "python startup.py && python -m uvicorn app.main:app --host 0.0.0.0 --port 7860"]
+# Start: initialize DB, then run FastAPI with Gradio
+CMD ["sh", "-c", "python startup.py && python -m uvicorn app.main:app --host 0.0.0.0 --port 7860 --timeout-keep-alive 120"]
