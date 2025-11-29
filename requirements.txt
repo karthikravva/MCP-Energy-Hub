@@ -1,0 +1,49 @@
+# MCP Energy Hub - Dependencies
+# Core Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# Database
+sqlalchemy==2.0.25
+asyncpg==0.29.0
+aiosqlite==0.19.0
+psycopg2-binary==2.9.9
+alembic==1.13.1
+
+# TimescaleDB / Time-series support
+timescale-vector==0.0.1
+
+# HTTP Clients for API ingestion
+httpx==0.26.0
+aiohttp==3.9.1
+requests==2.31.0
+
+# Data Processing
+pandas==2.1.4
+numpy==1.26.3
+pytz==2024.1
+
+# Scheduling
+apscheduler==3.10.4
+celery==5.3.6
+redis==5.0.1
+
+# Caching
+aiocache==0.12.2
+
+# Logging & Monitoring
+structlog==24.1.0
+prometheus-client==0.19.0
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3
+httpx==0.26.0
+
+# Environment
+python-dotenv==1.0.0
+
+# Geospatial (optional)
+geopy==2.4.1
