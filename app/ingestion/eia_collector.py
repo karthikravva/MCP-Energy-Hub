@@ -299,12 +299,24 @@ class EIACollector(BaseCollector):
             elif record_type == "interchange":
                 grouped[key]["net_interchange_mw"] = value
 
-        # Debug: log ERCOT totals
+        # Debug: log ERCOT totals - find one with both load and gen
         ercot_keys = [k for k in grouped.keys() if k[0] == "ERCOT"]
         if ercot_keys:
-            sample_key = ercot_keys[0]
+            # Find keys with generation data
+            ercot_with_gen = [
+                k for k in ercot_keys if grouped[k]['total_generation_mw'] > 0]
+            ercot_with_load = [
+                k for k in ercot_keys if grouped[k]['load_mw'] > 0]
             logger.info(
-                f"ERCOT sample after transform: load={grouped[sample_key]['load_mw']}, gen={grouped[sample_key]['total_generation_mw']}, fuel={grouped[sample_key]['generation_by_fuel']}")
+                f"ERCOT keys with gen: {len(ercot_with_gen)}, with load: {len(ercot_with_load)}, total: {len(ercot_keys)}")
+            if ercot_with_gen:
+                sample_key = ercot_with_gen[0]
+                logger.info(
+                    f"ERCOT with gen - ts={sample_key[1]}, load={grouped[sample_key]['load_mw']}, gen={grouped[sample_key]['total_generation_mw']}")
+            if ercot_with_load:
+                sample_key = ercot_with_load[0]
+                logger.info(
+                    f"ERCOT with load - ts={sample_key[1]}, load={grouped[sample_key]['load_mw']}, gen={grouped[sample_key]['total_generation_mw']}")
 
         # Calculate derived metrics
         result = []
