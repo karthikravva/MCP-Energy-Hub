@@ -33,8 +33,13 @@ async def startup():
         await collector.ensure_regions_exist()
         logger.info("✅ Grid regions loaded")
 
-        # Skip EIA data fetch on startup to speed up boot
-        logger.info("⚡ EIA data will be fetched on first API call")
+        # Fetch initial EIA data
+        logger.info("⚡ Fetching EIA grid data...")
+        try:
+            count = await collector.run()
+            logger.info(f"✅ Loaded {count} grid metrics records")
+        except Exception as e:
+            logger.warning(f"⚠️ Could not fetch EIA data: {e}")
 
     # Seed data centers if empty
     async with async_session_maker() as session:
