@@ -232,6 +232,11 @@ class EIACollector(BaseCollector):
                 f"Unique BA codes in generation data: {sorted(unique_bas)}")
             matched_bas = [ba for ba in unique_bas if ba in BA_REGION_MAP]
             logger.info(f"Matched BA codes: {matched_bas}")
+            # Log sample ERCO generation record
+            erco_gen = [r for r in gen_records if r.get(
+                "respondent") == "ERCO"]
+            if erco_gen:
+                logger.info(f"Sample ERCO generation: {erco_gen[0]}")
 
         for record in raw_data:
             # Try both 'respondent' and 'respondent-name' fields
@@ -293,6 +298,13 @@ class EIACollector(BaseCollector):
                 grouped[key]["total_generation_mw"] += value
             elif record_type == "interchange":
                 grouped[key]["net_interchange_mw"] = value
+
+        # Debug: log ERCOT totals
+        ercot_keys = [k for k in grouped.keys() if k[0] == "ERCOT"]
+        if ercot_keys:
+            sample_key = ercot_keys[0]
+            logger.info(
+                f"ERCOT sample after transform: load={grouped[sample_key]['load_mw']}, gen={grouped[sample_key]['total_generation_mw']}, fuel={grouped[sample_key]['generation_by_fuel']}")
 
         # Calculate derived metrics
         result = []
