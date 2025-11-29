@@ -1,6 +1,6 @@
 # Hugging Face Spaces Dockerfile
 # MCP Energy Hub - MCP's 1st Birthday Hackathon
-# Build v2 - Force rebuild with Gradio
+# Build v3 - Fix huggingface_hub compatibility
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -23,7 +23,8 @@ RUN pip install --no-cache-dir \
     aiohttp==3.9.1 \
     apscheduler==3.10.4 \
     python-dotenv==1.0.0 \
-    gradio==4.44.0
+    huggingface_hub==0.23.0 \
+    gradio==4.31.0
 
 # Create non-root user first
 RUN useradd -m -u 1000 appuser
