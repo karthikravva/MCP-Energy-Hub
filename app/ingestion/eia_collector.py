@@ -186,8 +186,18 @@ class EIACollector(BaseCollector):
         # Group by region and timestamp
         grouped = {}
 
+        # Debug: log sample records
+        gen_records = [r for r in raw_data if r.get(
+            "record_type") == "generation"]
+        if gen_records:
+            logger.info(
+                f"Sample generation record keys: {list(gen_records[0].keys())}")
+            logger.info(f"Sample generation record: {gen_records[0]}")
+
         for record in raw_data:
-            ba_code = record.get("respondent")
+            # Try both 'respondent' and 'respondent-name' fields
+            ba_code = record.get("respondent") or record.get(
+                "respondent-name", "").split("-")[0]
             if ba_code not in BA_REGION_MAP:
                 continue
 
