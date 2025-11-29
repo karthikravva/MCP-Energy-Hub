@@ -1,5 +1,6 @@
 # Hugging Face Spaces Dockerfile
 # MCP Energy Hub - MCP's 1st Birthday Hackathon
+# Build v2 - Force rebuild with Gradio
 FROM python:3.11-slim
 
 WORKDIR /app
