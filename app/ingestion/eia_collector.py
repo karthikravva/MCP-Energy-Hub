@@ -18,8 +18,9 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 
-# EIA Balancing Authority mappings
+# EIA Balancing Authority mappings - includes both ISO codes and utility codes
 BA_REGION_MAP = {
+    # Main ISO/RTO codes (used in demand data)
     "ERCO": {"region_id": "ERCOT", "name": "Electric Reliability Council of Texas", "timezone": "US/Central", "lat": 31.0, "lon": -99.0, "states": ["TX"], "type": "ISO"},
     "CISO": {"region_id": "CAISO", "name": "California ISO", "timezone": "US/Pacific", "lat": 37.0, "lon": -120.0, "states": ["CA"], "type": "ISO"},
     "PJM": {"region_id": "PJM", "name": "PJM Interconnection", "timezone": "US/Eastern", "lat": 40.0, "lon": -77.0, "states": ["PA", "NJ", "MD", "DE", "VA", "WV", "OH", "DC"], "type": "ISO"},
@@ -27,6 +28,42 @@ BA_REGION_MAP = {
     "ISNE": {"region_id": "ISONE", "name": "ISO New England", "timezone": "US/Eastern", "lat": 42.0, "lon": -71.0, "states": ["MA", "CT", "RI", "NH", "VT", "ME"], "type": "ISO"},
     "MISO": {"region_id": "MISO", "name": "Midcontinent ISO", "timezone": "US/Central", "lat": 41.0, "lon": -89.0, "states": ["IL", "IN", "MI", "MN", "WI", "IA", "MO", "AR", "LA", "MS"], "type": "ISO"},
     "SWPP": {"region_id": "SPP", "name": "Southwest Power Pool", "timezone": "US/Central", "lat": 35.0, "lon": -98.0, "states": ["OK", "KS", "NE", "SD", "ND"], "type": "ISO"},
+    # ERCOT utilities
+    "ERCOT": {"region_id": "ERCOT"},
+    # CAISO utilities
+    "BANC": {"region_id": "CAISO"}, "LDWP": {"region_id": "CAISO"}, "TIDC": {"region_id": "CAISO"},
+    "IID": {"region_id": "CAISO"}, "WALC": {"region_id": "CAISO"}, "AZPS": {"region_id": "CAISO"},
+    # PJM utilities
+    "AEP": {"region_id": "PJM"}, "AP": {"region_id": "PJM"}, "ATSI": {"region_id": "PJM"},
+    "BC": {"region_id": "PJM"}, "CE": {"region_id": "PJM"}, "DAY": {"region_id": "PJM"},
+    "DEOK": {"region_id": "PJM"}, "DOM": {"region_id": "PJM"}, "DPL": {"region_id": "PJM"},
+    "DUK": {"region_id": "PJM"}, "EKPC": {"region_id": "PJM"}, "JC": {"region_id": "PJM"},
+    "ME": {"region_id": "PJM"}, "PE": {"region_id": "PJM"}, "PEP": {"region_id": "PJM"},
+    "PL": {"region_id": "PJM"}, "PN": {"region_id": "PJM"}, "PS": {"region_id": "PJM"},
+    "RECO": {"region_id": "PJM"}, "UGI": {"region_id": "PJM"},
+    # NYISO utilities
+    "NYISO": {"region_id": "NYISO"},
+    # ISONE utilities
+    "ISONE": {"region_id": "ISONE"},
+    # MISO utilities
+    "AMIL": {"region_id": "MISO"}, "AMMO": {"region_id": "MISO"}, "BREC": {"region_id": "MISO"},
+    "CIN": {"region_id": "MISO"}, "CLEC": {"region_id": "MISO"}, "CWEP": {"region_id": "MISO"},
+    "CWLP": {"region_id": "MISO"}, "DECO": {"region_id": "MISO"}, "EAI": {"region_id": "MISO"},
+    "EES": {"region_id": "MISO"}, "EMBA": {"region_id": "MISO"}, "GRE": {"region_id": "MISO"},
+    "HE": {"region_id": "MISO"}, "LAFA": {"region_id": "MISO"}, "LAGN": {"region_id": "MISO"},
+    "LEPA": {"region_id": "MISO"}, "LGEE": {"region_id": "MISO"}, "MEC": {"region_id": "MISO"},
+    "MGE": {"region_id": "MISO"}, "MIUP": {"region_id": "MISO"}, "MP": {"region_id": "MISO"},
+    "MPW": {"region_id": "MISO"}, "NIPS": {"region_id": "MISO"}, "NSP": {"region_id": "MISO"},
+    "OVEC": {"region_id": "MISO"}, "SIGE": {"region_id": "MISO"}, "SIPC": {"region_id": "MISO"},
+    "SMMP": {"region_id": "MISO"}, "SMP": {"region_id": "MISO"}, "UPPC": {"region_id": "MISO"},
+    "WEC": {"region_id": "MISO"}, "WPS": {"region_id": "MISO"}, "ALTE": {"region_id": "MISO"},
+    # SPP utilities
+    "CSWS": {"region_id": "SPP"}, "EDE": {"region_id": "SPP"}, "GRDA": {"region_id": "SPP"},
+    "INDN": {"region_id": "SPP"}, "KACY": {"region_id": "SPP"}, "KCPL": {"region_id": "SPP"},
+    "LES": {"region_id": "SPP"}, "MPS": {"region_id": "SPP"}, "NPPD": {"region_id": "SPP"},
+    "OKGE": {"region_id": "SPP"}, "OPPD": {"region_id": "SPP"}, "SECI": {"region_id": "SPP"},
+    "SPRM": {"region_id": "SPP"}, "SPS": {"region_id": "SPP"}, "WAUE": {"region_id": "SPP"},
+    "WFEC": {"region_id": "SPP"}, "WR": {"region_id": "SPP"},
 }
 
 # Fuel type mapping from EIA codes
