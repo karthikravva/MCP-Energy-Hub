@@ -11,10 +11,10 @@ import os
 
 
 def get_api_base():
-    # When running on HF Spaces, use relative URL
+    # When running on HF Spaces, use localhost since we're in same container
     space_id = os.environ.get("SPACE_ID")
     if space_id:
-        return ""  # Same origin
+        return "http://localhost:7860"
     return "http://127.0.0.1:8000"
 
 
@@ -25,7 +25,7 @@ async def call_mcp_tool(tool_name: str, arguments: dict):
     """Call an MCP tool via the HTTP API"""
     async with httpx.AsyncClient(timeout=30.0) as client:
         try:
-            url = f"{API_BASE}/mcp/tools/call" if API_BASE else "/mcp/tools/call"
+            url = f"{API_BASE}/mcp/tools/call"
             response = await client.post(
                 url,
                 json={"name": tool_name, "arguments": arguments}
