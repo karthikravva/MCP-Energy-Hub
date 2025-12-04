@@ -1,36 +1,20 @@
----
-title: MCP Energy Hub
-emoji: ⚡
-colorFrom: green
-colorTo: blue
-sdk: docker
-pinned: false
-license: mit
-tags:
-  - mcp
-  - building-mcp-track-enterprise
-  - energy
-  - carbon-aware
-  - sustainability
-  - ai-agents
-  - climate-tech
-app_port: 7860
----
-
 <div align="center">
 
 # ⚡ MCP Energy Hub
 
 ### Real-Time Energy Grid Intelligence for Carbon-Aware AI
 
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![MCP Protocol](https://img.shields.io/badge/MCP-Protocol-blue?style=for-the-badge&logo=anthropic)](https://modelcontextprotocol.io)
-[![Hugging Face](https://img.shields.io/badge/🤗-Hugging%20Face-yellow?style=for-the-badge)](https://huggingface.co)
-[![EIA Data](https://img.shields.io/badge/EIA-Real%20Time%20Data-green?style=for-the-badge)](https://www.eia.gov/opendata/)
-[![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)](LICENSE)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-**🏆 MCP's 1st Birthday Hackathon Submission - Track 1: Building MCP (Enterprise)**
+[![GitHub Stars](https://img.shields.io/github/stars/your-username/mcp-energy-hub?style=social)](https://github.com/your-username/mcp-energy-hub)
+[![GitHub Forks](https://img.shields.io/github/forks/your-username/mcp-energy-hub?style=social)](https://github.com/your-username/mcp-energy-hub/fork)
 
-[🎬 Demo Video](#-demo-video) • [🚀 Try It Live](https://huggingface.co/spaces/MCP-1st-Birthday/mcp-energy-hub) • [📖 Documentation](#-mcp-tools) • [🐦 Share on X](https://twitter.com/intent/tweet?text=Check%20out%20MCP%20Energy%20Hub%20-%20Real-time%20energy%20grid%20intelligence%20for%20carbon-aware%20AI!%20%E2%9A%A1&url=https://huggingface.co/spaces/MCP-1st-Birthday/mcp-energy-hub)
+**Enterprise-grade MCP server providing real-time US power grid intelligence for carbon-aware AI compute scheduling**
+
+[📖 Documentation](#-mcp-tools) • [🚀 Quick Start](#-quick-start) • [🤝 Contributing](CONTRIBUTING.md) • [📜 License](LICENSE)
 
 </div>
 
@@ -73,14 +57,6 @@ app_port: 7860
 │ └─────┘     └─────┘     └─────┘     └─────┘     └─────┘       │
 └─────────────────────────────────────────────────────────────────┘
 ```
-
----
-
-## 🎬 Demo Video
-
-> **📹 [Watch the 3-minute demo →](YOUR_VIDEO_LINK_HERE)**
-
-*Shows: Real-time carbon queries, finding greenest region, AI impact analytics*
 
 ---
 
@@ -139,16 +115,50 @@ result = mcp.call_tool("get_best_region_for_compute", {
 
 ## 🚀 Quick Start
 
+### Prerequisites
+
+- Python 3.11+
+- [EIA API Key](https://www.eia.gov/opendata/register.php) (free)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/mcp-energy-hub.git
+cd mcp-energy-hub
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment
+cp .env.example .env
+# Edit .env and add your EIA_API_KEY
+```
+
+### Run the Server
+
+```bash
+# Start the FastAPI server
+python -m uvicorn app.main:app --reload --port 8000
+
+# Or run the standalone MCP server (for Claude Desktop)
+python mcp_server.py
+```
+
 ### Try the API
 
 ```bash
 # Get carbon intensity for Texas grid
-curl -X POST https://mcp-1st-birthday-mcp-energy-hub.hf.space/mcp/tools/call \
+curl -X POST http://localhost:8000/mcp/tools/call \
   -H "Content-Type: application/json" \
   -d '{"name": "get_grid_carbon", "arguments": {"region_id": "ERCOT"}}'
 ```
 
-### Response
+### Example Response
 
 ```json
 {
@@ -165,14 +175,17 @@ curl -X POST https://mcp-1st-birthday-mcp-energy-hub.hf.space/mcp/tools/call \
 
 ### Connect to Claude Desktop
 
-Add to your MCP settings:
+Add to your Claude Desktop MCP settings (`claude_desktop_config.json`):
 
 ```json
 {
   "mcpServers": {
     "energy-hub": {
       "command": "python",
-      "args": ["/path/to/mcp_server.py"]
+      "args": ["/absolute/path/to/mcp-energy-hub/mcp_server.py"],
+      "env": {
+        "EIA_API_KEY": "your-api-key-here"
+      }
     }
   }
 }
@@ -275,33 +288,70 @@ mcp-energy-hub/
 
 ---
 
+## � Docker Deployment
+
+```bash
+# Build the Docker image
+docker build -t mcp-energy-hub .
+
+# Run the container
+docker run -p 8000:8000 -e EIA_API_KEY=your-key mcp-energy-hub
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run tests
+pytest
+
+# Run with coverage
+pytest --cov=app --cov-report=html
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
 ## 🙏 Acknowledgments
 
 - **[Anthropic](https://anthropic.com)** - For creating the MCP protocol
-- **[Hugging Face](https://huggingface.co)** - For hosting this hackathon
-- **[EIA](https://www.eia.gov)** - For open energy data
-- **MCP's 1st Birthday Hackathon** - For the opportunity to build this
+- **[EIA](https://www.eia.gov)** - For open energy data APIs
+- **[FastAPI](https://fastapi.tiangolo.com)** - For the excellent web framework
 
 ---
 
 ## 📜 License
 
-MIT License - See [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 🔗 Links
 
-- **🐦 Twitter/X Post**: [Share your thoughts!](https://twitter.com/intent/tweet?text=Check%20out%20MCP%20Energy%20Hub%20-%20Real-time%20energy%20grid%20intelligence%20for%20carbon-aware%20AI!%20%E2%9A%A1&url=https://huggingface.co/spaces/MCP-1st-Birthday/mcp-energy-hub)
-- **💬 HF Discussions**: [Ask questions here](https://huggingface.co/spaces/MCP-1st-Birthday/mcp-energy-hub/discussions)
-- **🌐 Live Demo**: [Try it now!](https://huggingface.co/spaces/MCP-1st-Birthday/mcp-energy-hub)
+- **� MCP Protocol**: [modelcontextprotocol.io](https://modelcontextprotocol.io)
+- **⚡ EIA Open Data**: [eia.gov/opendata](https://www.eia.gov/opendata/)
+- **🐛 Report Issues**: [GitHub Issues](https://github.com/your-username/mcp-energy-hub/issues)
 
 ---
 
 <div align="center">
 
-**Built with ❤️ for MCP's 1st Birthday Hackathon**
+**Made with ❤️ for sustainable AI**
 
-*Making AI compute sustainable, one query at a time* ⚡🌱
+*Helping AI compute become carbon-aware, one query at a time* ⚡🌱
+
+⭐ Star this repo if you find it useful!
 
 </div>

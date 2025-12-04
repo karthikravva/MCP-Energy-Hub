@@ -63,3 +63,14 @@ Thumbs.db
 *.pem
 *.key
 secrets/
+
+# Gradio cache
+flagged/
+gradio_cached_examples/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# mypy
+.mypy_cache/
