@@ -9,8 +9,8 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-[![GitHub Stars](https://img.shields.io/github/stars/your-username/mcp-energy-hub?style=social)](https://github.com/your-username/mcp-energy-hub)
-[![GitHub Forks](https://img.shields.io/github/forks/your-username/mcp-energy-hub?style=social)](https://github.com/your-username/mcp-energy-hub/fork)
+[![GitHub Stars](https://img.shields.io/github/stars/karthikravva/MCP-Energy-Hub?style=social)](https://github.com/karthikravva/MCP-Energy-Hub)
+[![GitHub Forks](https://img.shields.io/github/forks/karthikravva/MCP-Energy-Hub?style=social)](https://github.com/karthikravva/MCP-Energy-Hub/fork)
 
 **Enterprise-grade MCP server providing real-time US power grid intelligence for carbon-aware AI compute scheduling**
 
@@ -342,7 +342,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **� MCP Protocol**: [modelcontextprotocol.io](https://modelcontextprotocol.io)
 - **⚡ EIA Open Data**: [eia.gov/opendata](https://www.eia.gov/opendata/)
-- **🐛 Report Issues**: [GitHub Issues](https://github.com/your-username/mcp-energy-hub/issues)
+- **🐛 Report Issues**: [GitHub Issues](https://github.com/karthikravva/MCP-Energy-Hub/issues)
 
 ---
 
